@@ -1,0 +1,95 @@
+# depslib dependency file v1.0
+1742760569 source:d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"graphics.h"
+	"defs.h"
+	"logic.h"
+	"menu.h"
+	"keypress.h"
+
+1742231987 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	<vector>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1743528440 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\defs.h
+
+1743537871 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\logic.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+	"graphics.h"
+	"defs.h"
+	"keypress.h"
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1742226787 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\entity.h
+	<iostream>
+
+1742760589 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\keypress.h
+	<SDL.h>
+	"defs.h"
+
+1743539541 d:\ki 2\lap trinh nang cao\gameproject\testsdl\starving-fish-main\starving-fish-main\src\menu.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	"graphics.h"
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1742760569 source:d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"graphics.h"
+	"defs.h"
+	"logic.h"
+	"menu.h"
+	"keypress.h"
+
+1742231987 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	<vector>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1743528440 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\defs.h
+
+1743537871 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\logic.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+	"graphics.h"
+	"defs.h"
+	"keypress.h"
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1742226787 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\entity.h
+	<iostream>
+
+1742760589 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\keypress.h
+	<SDL.h>
+	"defs.h"
+
+1743539541 d:\ki 2\lap trinh nang cao\gameproject\gameproject\src\menu.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	"graphics.h"
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
