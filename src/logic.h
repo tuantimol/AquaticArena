@@ -23,7 +23,7 @@ struct logic {
     Mix_Chunk *BiteSound, *ExplosionSound, *HurtSound;
     list<Entity*> Minnow, Barra, Orca, Marlin, Bomb, Shark, Lionfish;
     Uint32 MinnowTime = 0, BarraTime = 0, OrcaTime = 0, MarlinTime = 0, BombTime = 0, SharkTime = 0, LionfishTime = 0;
-    int score = 900, status = 0, health = HEALTH, mouse_x, mouse_y;
+    int score = 1000, status = 0, health = HEALTH, mouse_x, mouse_y;
     SDL_Color textColor;
     TTF_Font* textFont, *textFontHighScore, *textHealth;
     stringstream scoreText;
@@ -293,7 +293,7 @@ struct logic {
                 InitShark();
                 SharkTime = SDL_GetTicks();
             }
-            if(SDL_GetTicks() - BombTime >= 3000) {
+            if(SDL_GetTicks() - BombTime >= 4000) {
                 InitBomb();
                 BombTime = SDL_GetTicks();
             }
@@ -792,6 +792,9 @@ struct logic {
     }
     int wingame() {
         return (score >= WINSCORE);
+    }
+    int printScore (){
+        return score;
     }
 };
 #endif

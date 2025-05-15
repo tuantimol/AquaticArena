@@ -3,8 +3,7 @@
 
 #define SCREEN_WIDTH 875
 #define SCREEN_HEIGHT 658
-#define WINDOW_TITLE "Hungry Fish"
-#define INITIAL_SPEED 3
+#define WINDOW_TITLE "Aquatic Arena"
 #define MAX_KEYBOARD_KEYS 350
 
 #define BACKGROUND_IMG "background\\back.png"
@@ -25,7 +24,7 @@
 #define EAT_MARLIN 8
 #define EAT_LIONFISH 9
 #define EAT_SHARK 10
-#define PLAYER_SPEED 3.5
+#define PLAYER_SPEED 4
 #define BOT_SPEED 2.5
 
 

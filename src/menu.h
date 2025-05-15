@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include "logic.h"
 #include "defs.h"
 #include "graphics.h"
 #include <SDL_ttf.h>
@@ -14,9 +15,9 @@ struct Menu {
     *Barra, *Orca, *Marlin, *Lionfish, *Shark, *TextureScore, *option, *option_2, *sound, *sound_2;
     Mix_Music *MusicMenu;
     Mix_Chunk *OverSound, *WinSound;
-    int mouse_x, mouse_y, stat = 1;
+    int mouse_x, mouse_y, stat = 1, highscore = 0;
     SDL_Color textColor1, textColor2, textColor3, textColor4;
-    TTF_Font* textTitle1, *textScore, *textGameover, *textWingame, *textScore2;
+    TTF_Font* textTitle1, *textScore, *textGameover, *textWingame, *textScore2, *textHightScore, *textHightScoreNum;
     stringstream Titlegame1, GameoverText, scoreText;
     void init(Graphics &graphics) {
         background_menu = graphics.loadTexture("background\\back_menu.png");
@@ -53,12 +54,14 @@ struct Menu {
         textTitle1 = graphics.loadFont(TITLE_IMG, 100);
         textScore = graphics.loadFont(SCORE_IMG, 30);
         textScore2 = graphics.loadFont(SCORE_IMG, 40);
-        textGameover = graphics.loadFont(GAMEOVER_IMG, 60);
+        textGameover = graphics.loadFont(GAMEOVER_IMG, 100);
         textWingame = graphics.loadFont(GAMEOVER_IMG, 40);
-        textColor1 = {0, 250, 150, 200};
-        textColor2 = {225, 225, 125, 235};
-        textColor3 = {0, 250, 150, 0};
-        textColor4 = {225, 0, 0, 0};
+        textHightScore = graphics.loadFont(GAMEOVER_IMG, 60);
+        textHightScoreNum = graphics.loadFont(GAMEOVER_IMG, 150);
+        textColor1 = {0, 250, 150, 200};            //xanh ngọc nhạt
+        textColor2 = {225, 225, 125, 235};          // vàng nhạt
+        textColor3 = {0, 250, 150, 0};              // xanh lá chuối
+        textColor4 = {225, 0, 0, 0};                // đỏ
     }
     void drawMenu(Graphics &graphics) {
         graphics.renderTexture(background_menu, 0, 0);
@@ -103,15 +106,41 @@ struct Menu {
         graphics.renderTexture(option_menu, 135, 100);
         graphics.play(MusicMenu);
     }
-    void drawGameover(Graphics &graphics) {
-        graphics.renderTexture(back_option, 0, 0);
-        graphics.renderTexture(option_menu, 135, 100);
-        GameoverText.str("");
-        GameoverText << "GAME OVER";
-        TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor4, textGameover);
-        graphics.renderTexture(TextureGameover, 300, 230);
-        graphics.playSound(OverSound);
+    void drawGameover(logic &game, Graphics &graphics) {
+    graphics.renderTexture(back_option, 0, 0);
+    graphics.renderTexture(option_menu, 135, 100);
+
+    GameoverText.str("");
+    GameoverText << "GAME OVER";
+    TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor4, textGameover);
+    graphics.renderTexture(TextureGameover, 208, 180);
+
+    GameoverText.str("");
+    GameoverText << "Your Score: " << game.printScore();
+    TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textScore2);
+    graphics.renderTexture(TextureGameover, 300, 300);
+
+    ifstream file("highscore.txt");
+    if (file.is_open()) {
+        file >> highscore;
+        file.close();
     }
+
+    if (game.printScore() > highscore) {
+        highscore = game.printScore();
+        ofstream outFile("highscore.txt");
+        if (outFile.is_open()) {
+            outFile << highscore;
+            outFile.close();
+        }
+    }
+
+    GameoverText.str("");
+    GameoverText << "High Score: " << highscore;
+    TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor1, textScore2);
+    graphics.renderTexture(TextureGameover, 300, 350);
+    graphics.playSound(OverSound);
+}
     void drawWingame(Graphics &graphics) {
         graphics.renderTexture(back_option, 0, 0);
         graphics.renderTexture(option_menu, 135, 100);
@@ -121,6 +150,45 @@ struct Menu {
         graphics.renderTexture(TextureGameover, 200, 250);
         graphics.playSound(WinSound);
     }
+    void drawHightScore(logic &game, Graphics &graphics) {
+        graphics.renderTexture(back_option, 0, 0);
+        graphics.renderTexture(option_menu, 135, 100);
+
+        GameoverText.str("");
+        GameoverText << "THE HIGHSCORE IS";
+        TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textHightScore);
+        graphics.renderTexture(TextureGameover, 210, 210);
+
+        GameoverText.str("");
+        GameoverText << highscore;
+        TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textWingame);
+        graphics.renderTexture(TextureGameover, 370, 310);
+
+        graphics.play(MusicMenu);
+    }
+
+
+
+    void doHightScore(logic &game, Graphics &graphics) {
+        SDL_Event event;
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+        if ( mouse_x >= 380 && mouse_x <= 460 && mouse_y >= 570 && mouse_y <= 650){
+            graphics.renderTexture(turnback, 400, 570);
+        }
+        else graphics.renderTexture(turnback_2, 410, 570);
+        while (SDL_PollEvent(&event)){
+            switch(event.type){
+            case SDL_QUIT:
+                exit(0);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if ( mouse_x >= 380 && mouse_x <= 530 && mouse_y >= 570 && mouse_y <= 650){
+                    game.status = 0;
+                }
+                break;
+            }
+        }
+    }
     void doMenu(logic& game, Graphics &graphics){
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -129,16 +197,21 @@ struct Menu {
         }
         else graphics.renderTexture(start1, SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 - 130);
 
-        if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 309 && mouse_y <= 427){
-            graphics.renderTexture(gameoption_2, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 - 20);
+        if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 199 && mouse_y <= 317){
+            graphics.renderTexture(gameoption_2, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 - 130);
         }
-        else graphics.renderTexture(gameoption, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 - 20);
-
+        else graphics.renderTexture(gameoption, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 - 130);
 
         if ( mouse_x >= SCREEN_WIDTH/2 - 150 && mouse_x <= SCREEN_WIDTH/2 - 30 && mouse_y >= SCREEN_HEIGHT/2 + 95 && mouse_y <= SCREEN_HEIGHT/2 + 215){
             graphics.renderTexture(exit2, SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 + 95);
         }
         else graphics.renderTexture(exit1, SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 + 95);
+
+        if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 384 && mouse_y <= 502){
+            graphics.renderTexture(highscore2, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 + 95);
+        }
+        else graphics.renderTexture(highscore1, SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 + 95);
+
         if(stat == 1)
             graphics.renderTexture(sound_2, SCREEN_WIDTH - 60, SCREEN_HEIGHT - 60);
         else
@@ -153,8 +226,11 @@ struct Menu {
                     Mix_HaltMusic();
                     game.status = 1;
                 }
-                if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 309 && mouse_y <= 427){
+                if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 199 && mouse_y <= 317){
                     game.status = 2;
+                }
+                if ( mouse_x >= 482 && mouse_x <= 602 && mouse_y >= 384 && mouse_y <= 502){
+                    game.status = 7;
                 }
                 if ( mouse_x >= SCREEN_WIDTH/2 - 150 && mouse_x <= SCREEN_WIDTH/2 - 30 && mouse_y >= SCREEN_HEIGHT/2 + 95 && mouse_y <= SCREEN_HEIGHT/2 + 215){
                     exit(0);
@@ -287,16 +363,16 @@ struct Menu {
         while (!quit){
             SDL_PollEvent(&event);
             SDL_GetMouseState(&mouse_x, &mouse_y);
-            if ( mouse_x >= SCREEN_WIDTH/2 - 30&& mouse_x <= SCREEN_WIDTH/2 + 40 && mouse_y >= 380 && mouse_y <= 450){
-                graphics.renderTexture(home_2, SCREEN_WIDTH/2 - 30, 380);
+            if ( mouse_x >= SCREEN_WIDTH/2 - 30&& mouse_x <= SCREEN_WIDTH/2 + 40 && mouse_y >= 450 && mouse_y <= 520){
+                graphics.renderTexture(home_2, SCREEN_WIDTH/2 - 30, 450);
             }
-            else graphics.renderTexture(home, SCREEN_WIDTH/2 - 30, 380);
+            else graphics.renderTexture(home, SCREEN_WIDTH/2 - 30, 450);
             switch(event.type){
             case SDL_QUIT:
                 exit(0);
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                if ( mouse_x >= SCREEN_WIDTH/2 - 30&& mouse_x <= SCREEN_WIDTH/2 + 40 && mouse_y >= 380 && mouse_y <= 450) {
+                if ( mouse_x >= SCREEN_WIDTH/2 - 30&& mouse_x <= SCREEN_WIDTH/2 + 40 && mouse_y >= 450 && mouse_y <= 520) {
                     game.status = 0;
                     quit = true;
                 }

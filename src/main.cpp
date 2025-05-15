@@ -76,7 +76,7 @@ int SDL_main(int argc, char* argv[]){
             menu.doPause(game, graphics);
         }
         if(game.status == 4) {
-            menu.drawGameover(graphics);
+            menu.drawGameover(game, graphics);
             menu.doGameoverandWin(game, graphics);
         }
         if(game.status == 5) {
@@ -87,6 +87,12 @@ int SDL_main(int argc, char* argv[]){
             menu.drawOption(graphics);
             menu.doOption2(game, graphics);
         }
+
+        if(game.status == 7) {
+            menu.drawHightScore(game, graphics);
+            menu.doHightScore(game, graphics);
+        }
+
         graphics.presentScene();
         SDL_Delay(10);
     }
