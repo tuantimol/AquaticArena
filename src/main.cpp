@@ -89,8 +89,8 @@ int SDL_main(int argc, char* argv[]){
         }
 
         if(game.status == 7) {
-            menu.drawHightScore(game, graphics);
-            menu.doHightScore(game, graphics);
+            menu.drawHighScore(game, graphics);
+            menu.doHighScore(game, graphics);
         }
 
         graphics.presentScene();

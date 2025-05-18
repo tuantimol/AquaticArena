@@ -56,8 +56,8 @@ struct Menu {
         textScore2 = graphics.loadFont(SCORE_IMG, 40);
         textGameover = graphics.loadFont(GAMEOVER_IMG, 100);
         textWingame = graphics.loadFont(GAMEOVER_IMG, 40);
-        textHightScore = graphics.loadFont(GAMEOVER_IMG, 60);
-        textHightScoreNum = graphics.loadFont(GAMEOVER_IMG, 150);
+        textHightScore = graphics.loadFont(TITLE_IMG, 70);
+        textHightScoreNum = graphics.loadFont(TITLE_IMG, 130);
         textColor1 = {0, 250, 150, 200};            //xanh ngọc nhạt
         textColor2 = {225, 225, 125, 235};          // vàng nhạt
         textColor3 = {0, 250, 150, 0};              // xanh lá chuối
@@ -67,7 +67,7 @@ struct Menu {
         graphics.renderTexture(background_menu, 0, 0);
         Titlegame1.str("");
         Titlegame1 << "AQUATIC ARENA";
-        TextureTitle1 = graphics.loadTextTexture(Titlegame1.str().c_str(), textColor1, textTitle1);
+        TextureTitle1 = graphics.loadTextTexture(Titlegame1.str().c_str(), textColor2, textTitle1);
         graphics.renderTexture(TextureTitle1, 150, 50);
         graphics.play(MusicMenu);
     }
@@ -150,26 +150,36 @@ struct Menu {
         graphics.renderTexture(TextureGameover, 200, 250);
         graphics.playSound(WinSound);
     }
-    void drawHightScore(logic &game, Graphics &graphics) {
+    void drawHighScore(logic &game, Graphics &graphics) {
         graphics.renderTexture(back_option, 0, 0);
         graphics.renderTexture(option_menu, 135, 100);
+
+        ifstream file("highscore.txt");
+        if (file.is_open()) {
+            file >> highscore;
+            file.close();
+        }
 
         GameoverText.str("");
         GameoverText << "THE HIGHSCORE IS";
         TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textHightScore);
-        graphics.renderTexture(TextureGameover, 210, 210);
+        int titleWidth, titleHeight;
+        SDL_QueryTexture(TextureGameover, NULL, NULL, &titleWidth, &titleHeight);
+        graphics.renderTexture(TextureGameover, (SCREEN_WIDTH - titleWidth)/2, 200);
 
         GameoverText.str("");
         GameoverText << highscore;
-        TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textWingame);
-        graphics.renderTexture(TextureGameover, 370, 310);
+        TextureGameover = graphics.loadTextTexture(GameoverText.str().c_str(), textColor2, textHightScoreNum);
+        int scoreWidth, scoreHeight;
+        SDL_QueryTexture(TextureGameover, NULL, NULL, &scoreWidth, &scoreHeight);
+        graphics.renderTexture(TextureGameover, (SCREEN_WIDTH - scoreWidth)/2, 300);
 
         graphics.play(MusicMenu);
-    }
+}
 
 
 
-    void doHightScore(logic &game, Graphics &graphics) {
+    void doHighScore(logic &game, Graphics &graphics) {
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
         if ( mouse_x >= 380 && mouse_x <= 460 && mouse_y >= 570 && mouse_y <= 650){
