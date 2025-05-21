@@ -31,9 +31,9 @@ Khi bạn đạt được 300 điểm bạn sẽ được ăn thêm Orca và đ�
 Khi bạn đạt được 500 điểm bạn sẽ được ăn thêm Marlin và được cộng thêm 8 điểm, nếu va phải LionFish bạn sẽ bị trừ 10 máu.</li>
 <li> <b>LionFish</b><p align="center"><img src="https://github.com/tuantimol/AquaticArena/blob/main/src/image/LionfishImage.png" width=100> </p>
 Khi bạn đạt được 700 điểm bạn sẽ được ăn thêm LionFish và được cộng thêm 9 điểm, nếu va phải Shark bạn sẽ bị trừ 10 máu.</li>
-<li> <b>Shark</b><p align="center"><img src="https://github.com/tuantimol/AquaticArena/blob/main/src/image/LionfishImage.png" width=100> </p>
+<li> <b>Shark</b><p align="center"><img src="https://github.com/tuantimol/AquaticArena/blob/main/src/image/SharkImage.png" width=100> </p>
 Khi bạn đạt được 900 điểm bạn sẽ được ăn thêm Shark và được cộng thêm 10 điểm.</li>
-<li> <b>Bomb</b><p align="center"><img src="https://github.com/tuantimol/AquaticArena/blob/main/src/image/LionfishImage.png" width=100> </p>
+<li> <b>Bomb</b><p align="center"><img src="https://github.com/tuantimol/AquaticArena/blob/main/src/image/bomb.png" width=100> </p>
 Khi bạn đạt được 900 điểm cũng sẽ là lúc Bomb xuất hiện và khi bạn va phải Bomb bạn sẽ mất 20 máu.</li>
 </ul>
 
@@ -52,11 +52,14 @@ Khi bạn đạt được 900 điểm cũng sẽ là lúc Bomb xuất hiện và
 </ul>
 
 <h3>Cách tạm dừng game</h3>
-Người chơi có thể click chuột trái vào pause button, khi đó game sẽ tạm dừng
+<ul>
+ <li>Người chơi có thể click chuột trái vào pause button, khi đó game sẽ tạm dừng.</li>
+</ul>
+
 <h2>IV. Tài liệu tham khảo</h2>
 <ul>
-<li> Code mẫu tham khảo trên <a href=" https://lazyfoo.net/tutorials/SDL/"> Lazy Foo' Productions </a>
+<li> Code mẫu tham khảo trên <a href="https://lazyfoo.net/tutorials/SDL/"> Lazy Foo' Productions </a>
  <li> Tài nguyên Sprites và Background lấy từ <a href="https://www.spriters-resource.com/pc_computer/feedingfrenzy/"> The Spriters Resource </a></li>
- <li> Phông chữ trong trò chơi được tải từ <a href=" https://www.dafont.com/">Dafont</a></li>
+ <li> Phông chữ trong trò chơi được tải từ <a href="https://www.dafont.com/">Dafont</a></li>
  <li> Nhạc nền menu và sound effect tự thu âm </li>
 </ul></h2>
